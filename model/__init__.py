@@ -1,5 +1,3 @@
-"""Model module for salary prediction."""
+from model.developer_classifier import DeveloperClassifier
 
-from model.regressor import SalaryRegressor
-
-__all__ = ["SalaryRegressor"]
+__all__ = ["DeveloperClassifier"]
