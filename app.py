@@ -34,9 +34,9 @@ def main() -> int:
         return 1
 
     try:
-        X = np.load(x_path)
-    except Exception as e:
-        print(f"Error loading file: {e}", file=sys.stderr)
+        x_data = np.load(x_path)
+    except (OSError, ValueError) as exc:
+        print(f"Error loading file: {exc}", file=sys.stderr)
         return 1
 
     model = FCNRegressor()
@@ -50,7 +50,7 @@ def main() -> int:
         )
         return 1
 
-    predictions = model.predict(X)
+    predictions = model.predict(x_data)
 
     for salary in predictions:
         print(f"{salary:.2f}")
