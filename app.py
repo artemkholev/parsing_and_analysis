@@ -1,5 +1,3 @@
-"""Salary prediction CLI - outputs predicted salaries in rubles."""
-
 import signal
 import sys
 import warnings

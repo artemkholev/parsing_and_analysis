@@ -1,5 +1,3 @@
-"""Fully Connected Network (FCN) for salary regression using PyTorch."""
-
 from pathlib import Path
 from typing import Dict, List, Optional
 
@@ -9,7 +7,7 @@ from torch import nn
 from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
 
 
-class FCNRegressor:  # pylint: disable=too-many-instance-attributes
+class FCNRegressor:
     """Salary predictor based on a fully connected neural network.
 
     Architecture: Linear -> BatchNorm -> ReLU -> Dropout (x N) -> Linear.
@@ -30,7 +28,6 @@ class FCNRegressor:  # pylint: disable=too-many-instance-attributes
     )
     SALARY_MULTIPLIER = 1000.0
 
-    # pylint: disable=too-many-arguments,too-many-positional-arguments
     def __init__(
         self,
         hidden_dims: Optional[List[int]] = None,
