@@ -1,4 +1,4 @@
-"""Salary prediction CLI - outputs predicted salaries in rubles"""
+"""Salary prediction CLI - outputs predicted salaries in rubles."""
 
 import signal
 import sys
@@ -7,18 +7,17 @@ from pathlib import Path
 
 import numpy as np
 
-from model import SalaryRegressor
+from model import FCNRegressor
 
 warnings.filterwarnings("ignore", category=RuntimeWarning)
 signal.signal(signal.SIGPIPE, signal.SIG_DFL)
 
 
 def main() -> int:
-    """
-    Main prediction function
+    """Run salary prediction from a numpy feature file.
 
     Returns:
-        Exit code (0 - success, 1 - error)
+        Exit code (0 - success, 1 - error).
     """
     if len(sys.argv) != 2:
         print(f"Usage: python {sys.argv[0]} path/to/x_data.npy", file=sys.stderr)
@@ -40,12 +39,15 @@ def main() -> int:
         print(f"Error loading file: {e}", file=sys.stderr)
         return 1
 
-    model = SalaryRegressor()
+    model = FCNRegressor()
 
     try:
         model.load()
     except FileNotFoundError:
-        print("Error: Model weights not found. Run train.py first.", file=sys.stderr)
+        print(
+            "Error: Model weights not found. Run scripts/train_nn.py first.",
+            file=sys.stderr,
+        )
         return 1
 
     predictions = model.predict(X)

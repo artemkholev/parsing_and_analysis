@@ -5,16 +5,13 @@
 ├── pipeline_app.py             # Пайплайн обработки CSV -> npy
 ├── model/
 │   ├── __init__.py
-│   ├── regressor.py            # Ridge регрессия
 │   └── nn_regressor.py         # FCN нейронная сеть (PyTorch)
 ├── scripts/
-│   ├── train.py                # Обучение Ridge модели
 │   └── train_nn.py             # Обучение FCN с MLflow трекингом
 ├── pipeline/
 │   ├── base_handler.py         # Базовый класс обработчика
 │   └── handlers.py             # Обработчики данных
 ├── resources/
-│   ├── model_weights.joblib    # Веса Ridge модели
 │   └── nn_model_weights.pt     # Веса FCN модели
 ├── example/
 │   ├── hh.csv                  # Пример исходных данных
@@ -65,15 +62,7 @@ python3 pipeline_app.py path/to/hh.csv
 - `x_data.npy` — матрица признаков `(n_samples, 76)`
 - `y_data.npy` — вектор зарплат `(n_samples,)` в тысячах рублей
 
-### Обучение Ridge модели
-
-```bash
-python3 scripts/train.py path/to/x_data.npy path/to/y_data.npy
-```
-
-Обучает Ridge регрессию, выводит метрики, сохраняет веса в `resources/model_weights.joblib`.
-
-### Обучение FCN нейронной сети с MLflow трекингом
+### Обучение FCN с MLflow трекингом
 
 ```bash
 python3 scripts/train_nn.py path/to/x_data.npy path/to/y_data.npy
@@ -87,13 +76,7 @@ python3 scripts/train_nn.py path/to/x_data.npy path/to/y_data.npy
 
 Сохраняет веса в `resources/nn_model_weights.pt`.
 
-## Модели
-
-### Ridge Regression
-
-Линейная регрессия с L2-регуляризацией (`alpha=1.0`).
-
-### FCN (Fully Connected Network)
+## Модель — FCN (Fully Connected Network)
 
 Полносвязная нейронная сеть на PyTorch:
 
@@ -110,7 +93,7 @@ Input(76) → Linear(256) → BatchNorm → ReLU → Dropout(0.1)
 - Early stopping: patience=15
 - Batch size: 64
 
-**Метрики на тестовой выборке (FCN):**
+**Метрики на тестовой выборке:**
 
 | Метрика | Значение |
 |---------|----------|
@@ -118,7 +101,7 @@ Input(76) → Linear(256) → BatchNorm → ReLU → Dropout(0.1)
 | MAE     | ~42 000 руб |
 | RMSE    | ~77 000 руб |
 
-**Формат данных:** зарплаты в `y_data.npy` хранятся в тысячах рублей. При предсказании и логировании метрик значения конвертируются в рубли (×1000).
+**Формат данных:** зарплаты в `y_data.npy` хранятся в тысячах рублей. При предсказании значения конвертируются в рубли (×1000).
 
 ## Признаки
 
